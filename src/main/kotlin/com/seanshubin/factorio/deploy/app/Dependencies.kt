@@ -64,4 +64,12 @@ class Dependencies(args:Array<String>) {
         emit,
         GlobalConstants.headlessFactorioUrl,
         GlobalConstants.instanceName)
+    val connect: Connect = ConnectImpl(
+        ec2Api,
+        factorioApi,
+        sshFactory,
+        keyPath,
+        emit,
+        GlobalConstants.headlessFactorioUrl,
+        GlobalConstants.instanceName)
 }
