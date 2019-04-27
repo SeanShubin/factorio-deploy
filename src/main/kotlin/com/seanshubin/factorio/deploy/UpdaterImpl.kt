@@ -31,9 +31,10 @@ class UpdaterImpl(
     private fun buildSshCommands(factorio: FactorioInfo): List<SshCommand> {
         val fileName = factorio.fileName
         return listOf(
+            SshCommand.Exec("supervisorctl stop factorio"),
             SshCommand.Exec("wget -O $fileName $factorioHeadlessUrl"),
             SshCommand.Exec("tar xf $fileName"),
-            SshCommand.Exec("supervisorctl restart factorio")
+            SshCommand.Exec("supervisorctl start factorio")
         )
     }
 }
