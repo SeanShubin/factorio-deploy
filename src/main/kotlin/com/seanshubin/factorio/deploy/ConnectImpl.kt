@@ -23,7 +23,7 @@ class ConnectImpl(
                 timeBetweenAttempts = Duration.ofSeconds(5),
                 totalTimeLimit = Duration.ofMinutes(2)
             ) {
-                sshConnection.exec("ls -1") == 0
+                sshConnection.execExitCode("ls -1") == 0
             }
         }
         val host = ec2Instance.host

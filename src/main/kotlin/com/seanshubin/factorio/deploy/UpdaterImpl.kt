@@ -19,7 +19,7 @@ class UpdaterImpl(
         val factorio = factorioApi.loadFactorio()
         sshFactory.withSshConnection(ec2Instance.host) { sshConnection ->
             RetryUtil.wait(attemptLimit = 20, timeBetweenAttempts = Duration.ofSeconds(5), totalTimeLimit = Duration.ofMinutes(2)){
-                sshConnection.exec("ls -1") == 0
+                sshConnection.execExitCode("ls -1") == 0
             }
             val sshCommands = buildSshCommands(factorio)
             sshCommands.forEach { it.exec(sshConnection) }

@@ -72,4 +72,9 @@ class Dependencies(args:Array<String>) {
         emit,
         GlobalConstants.headlessFactorioUrl,
         GlobalConstants.instanceName)
+    val restore: Restore = RestoreImpl(
+        ec2Api,
+        sshFactory,
+        GlobalConstants.instanceName
+    )
 }
