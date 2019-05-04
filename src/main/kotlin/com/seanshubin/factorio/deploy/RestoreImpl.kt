@@ -22,7 +22,9 @@ class RestoreImpl(
             val result = sshConnection.execResult("ls -lt factorio/saves")
             val saveGame = result.outputLines.map(::toSaveGameName).filterNotNull()[0]
             sshConnection.exec("date")
-            sshConnection.exec("echo cp factorio/saves/$saveGame factorio/seed-12335.zip")
+            sshConnection.exec("supervisorctl stop factorio")
+            sshConnection.exec("cp factorio/saves/$saveGame factorio/seed-12345.zip")
+            sshConnection.exec("supervisorctl start factorio")
         }
     }
 
@@ -31,11 +33,12 @@ class RestoreImpl(
         return if (matchResult == null) {
             null
         } else {
-            matchResult.groupValues[1]
+            val saveGameName = matchResult.groupValues[1]
+            saveGameName
         }
     }
 
     companion object {
-        val SaveGameRegex = Regex("""-rw-r--r-- 1 ec2-user ec2-user \d+ \w+ \d+ \d+:\d+ (\w+\.zip)""")
+        val SaveGameRegex = Regex("""-rw-r--r-- 1 ec2-user ec2-user \d+ \w+ +\d+ \d+:\d+ (\w+\.zip)""")
     }
 }
